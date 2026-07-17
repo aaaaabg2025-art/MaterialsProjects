@@ -1,6 +1,6 @@
 from ase.io import read
 
-atoms = read("water.xyz")
+atoms = read("water.xyz")#water.xyz ASE解析 Atoms对象
 
 print(atoms)
 
