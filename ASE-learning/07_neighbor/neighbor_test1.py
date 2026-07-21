@@ -7,7 +7,7 @@ supercell = cu.repeat((3,3,3))
 
 i, j, d = neighbor_list("ijd", supercell, 3.0)
 
-for center, neighbor, distance in zip(i, j, d):
+for center, neighbor, distance in zip(i, j, d):#把三个列表同步打包。
 
     if center == 0:
 

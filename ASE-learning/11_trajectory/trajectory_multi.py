@@ -9,7 +9,7 @@ traj = Trajectory("water.traj", "w")
 traj.write(atoms)
 
 # Step 1
-atoms.positions[0][0] += 0.2
+atoms.positions[0][0] += 0.2#第二个0代表X坐标
 traj.write(atoms)
 
 # Step 2

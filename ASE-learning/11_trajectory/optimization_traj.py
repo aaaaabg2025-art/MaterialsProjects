@@ -21,7 +21,7 @@ for i in range(10):
 
     traj.write(atoms)
 
-    optimizer.run(steps=1)
+    optimizer.run(steps=1)#只优化一步，然后立即返回程序
 
 print("优化后能量：")
 print(atoms.get_potential_energy())
