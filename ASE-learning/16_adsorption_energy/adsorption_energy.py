@@ -41,6 +41,6 @@ print("Surface+H:", E_total)
 print(slab_H)
 print(slab_H.positions)
 
-E_ads = E_total - E_slab - 0.5 * E_H2
+E_ads = slab_H.get_potential_energy() - E_slab - 0.5 * E_H2
 
 print("Adsorption Energy:", E_ads)
