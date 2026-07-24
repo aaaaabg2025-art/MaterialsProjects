@@ -58,18 +58,50 @@ for site in sites:
             print(f"Adsorption Energy: {i} {E_ads[i]:.6f} eV")
             print("-" * 40)
 print("\n========== Summary ==========")
-print(f"Adsorption Site : {site}")
-print("-" * 65)
-print(f"{'Index':<8}{'Vacancy(eV)':<18}{'Total(eV)':<18}{'Ads(eV)':<18}")
-print("-" * 65)
+print("-" * 80)
+print(
+    f"{'Site':<10}"
+    f"{'Index':<8}"
+    f"{'Vacancy(eV)':<15}"
+    f"{'Total(eV)':<15}"
+    f"{'Ads(eV)':<15}"
+)
+print("-" * 80)
 
-for i in atoms_to_delete:
-        print(
-        f"{i:<8}"
-        f"{E_vacancy[i]:<18.6f}"
-        f"{E_total[i]:<18.6f}"
-        f"{E_ads[i]:<18.6f}"
-        )
 for r in results:
+    print(
+        f"{r['site']:<10}"
+        f"{r['vacancy']:<8}"
+        f"{r['vacancy_energy']:<15.6f}"
+        f"{r['total_energy']:<15.6f}"
+        f"{r['adsorption_energy']:<15.6f}"
+    )
+best = min(
+results,
+key=lambda x: x["adsorption_energy"]
+)
+print("\n===== Best Structure =====")
+print(f"Site      : {best['site']}")
+print(f"Vacancy   : {best['vacancy']}")
+print(f"Ads Energy: {best['adsorption_energy']:.6f} eV")
+sorted_results = sorted(
+    results,
+    key=lambda x: x["adsorption_energy"]
+)
+print("\n===== Sorted by Adsorption Energy =====")
 
-    print(r)    
+for r in sorted_results:
+    print(
+        f"{r['site']:<10}"
+        f"{r['vacancy']:<8}"
+        f"{r['adsorption_energy']:<12.6f}"
+    )
+print("\n===== Ranking =====")
+
+for rank, r in enumerate(sorted_results, start=1):
+    print(
+        f"{rank:2d}. "
+        f"{r['site']:<8}"
+        f"Vacancy {r['vacancy']:<3d}"
+        f"{r['adsorption_energy']:.6f} eV"
+    )
