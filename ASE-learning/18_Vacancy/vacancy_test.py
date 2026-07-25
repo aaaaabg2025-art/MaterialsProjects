@@ -3,6 +3,8 @@ from ase.calculators.emt import EMT
 from ase.visualize import view
 from ase.build import molecule #EMT计算需要导入Atoms类
 from ase.build import add_adsorbate
+import csv
+# 计算 H2 参考能量
 H2 = molecule("H2")
 
 H2.calc = EMT()
@@ -10,12 +12,15 @@ H2.calc = EMT()
 E_H2 = H2.get_potential_energy()
 
 print(f"H2: {E_H2:.6f} eV")
+## 初始化数据存储，建立字典
 sites = [    "ontop",    "bridge",    "fcc",    "hcp"]
 E_vacancy = {}
 E_ads = {}
 E_total = {}
 results = []
+# 建立 Cu(111) 表面模型
 slab = fcc111("Cu", size=(3,3,4), vacuum=10)
+# 循环不同吸附位点和空位位置
 atoms_to_delete = [27, 18, 9, 0]
 for site in sites:
         print(f"\nCurrent site: {site}")
@@ -27,6 +32,7 @@ for site in sites:
 
             del slab_new[i]          # 删除第 i 个原子
 
+            #计算vacancy能量
             slab_new.calc = EMT()
 
             E_vacancy[i]= slab_new.get_potential_energy()
@@ -34,6 +40,7 @@ for site in sites:
             print(f"删除 {i} 号原子")
             print(f"Vacancy Energy : {E_vacancy [i]:.6f} eV")
 
+            # 添加 H 原子并计算吸附能
             slab_H = slab_new.copy()
 
             add_adsorbate(
@@ -46,6 +53,7 @@ for site in sites:
             E_total[i] = slab_H.get_potential_energy()
             print(f"E_total: {i} {E_total[i]:.6f} eV")
             E_ads[i] = E_total[i] - E_vacancy[i] - 0.5 * E_H2
+            # 保存当前计算结果
             results.append(
                      {
                      "site": site,
@@ -57,6 +65,7 @@ for site in sites:
 )
             print(f"Adsorption Energy: {i} {E_ads[i]:.6f} eV")
             print("-" * 40)
+# 输出所有计算结果
 print("\n========== Summary ==========")
 print("-" * 80)
 print(
@@ -76,6 +85,7 @@ for r in results:
         f"{r['total_energy']:<15.6f}"
         f"{r['adsorption_energy']:<15.6f}"
     )
+# 查找最稳定吸附构型
 best = min(
 results,
 key=lambda x: x["adsorption_energy"]
@@ -84,6 +94,7 @@ print("\n===== Best Structure =====")
 print(f"Site      : {best['site']}")
 print(f"Vacancy   : {best['vacancy']}")
 print(f"Ads Energy: {best['adsorption_energy']:.6f} eV")
+#排序
 sorted_results = sorted(
     results,
     key=lambda x: x["adsorption_energy"]
@@ -96,6 +107,7 @@ for r in sorted_results:
         f"{r['vacancy']:<8}"
         f"{r['adsorption_energy']:<12.6f}"
     )
+# Print ranking
 print("\n===== Ranking =====")
 
 for rank, r in enumerate(sorted_results, start=1):
@@ -105,3 +117,16 @@ for rank, r in enumerate(sorted_results, start=1):
         f"Vacancy {r['vacancy']:<3d}"
         f"{r['adsorption_energy']:.6f} eV"
     )
+#使用csv模块将结果保存到CSV文件中
+with open("results.csv", "w", newline="") as f:
+     writer = csv.writer(f)
+     writer.writerow(["Site", "Index", "Vacancy Energy", "Total Energy", "Adsorption Energy"])
+     for r in sorted_results:
+         writer.writerow([
+             r["site"],
+             r["vacancy"],
+             f"{r['vacancy_energy']:.6f}",
+             f"{r['total_energy']:.6f}",
+             f"{r['adsorption_energy']:.6f}"
+         ])
+print("Results saved to results.csv")
