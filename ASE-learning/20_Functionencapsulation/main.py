@@ -5,6 +5,8 @@ from calculator import calculate_energy
 from analysis import find_best
 from reference import get_reference_energy
 import config
+from ase.io import write
+
 
 
 
@@ -56,7 +58,8 @@ for site in config.sites:
             "vacancy": index,
             "vacancy_energy": E_vacancy,
             "total_energy": E_total,
-            "adsorption_energy": E_ads
+            "adsorption_energy": E_ads,
+            "structure": slab_ads.copy()
             }
         )
 print(len(results))
@@ -66,3 +69,16 @@ best_result = find_best(results)
 print("Best Result:")
 for key, value in best_result.items():
     print(f"  {key}: {value}")
+write(
+    "best_result.xyz",
+    best_result["structure"]
+)
+
+print("Finished!")
+for atom in best_result["structure"]:
+    print(
+        atom.index,
+        atom.symbol,
+        atom.tag,
+        atom.position
+    )
