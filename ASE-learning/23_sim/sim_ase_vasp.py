@@ -4,6 +4,7 @@ from ase.optimize import BFGS
 from ase.constraints import FixAtoms
 import csv
 from ase.io import write
+from ase.calculators.vasp import Vasp
 
 class Simulation:
 
@@ -29,6 +30,7 @@ class Simulation:
             vacuum=self.vacuum
         )
 
+        self.structure.pbc = [True, True, True]
 
         print("Surface created")
         print("Number of atoms:", len(self.structure))
@@ -81,6 +83,9 @@ class Simulation:
     def calculate_h_reference_energy(self):
 
         h2 = molecule("H2")
+        h2.center(vacuum=8.0)
+        h2.pbc = [True, True, True]
+
         h2.calc = self.create_calculator()
 
         energy_h2 = h2.get_potential_energy()
@@ -165,7 +170,15 @@ class Simulation:
 
         print("Structure saved to:", filename)
     def create_calculator(self):
-        return EMT()
+        return Vasp(
+            xc="PBE",
+            encut=450,
+            kpts=(4, 4, 1),
+            gamma=True,
+            lscalapack=False,
+            lreal="Auto",
+            directory="vasp_test_mpi2_fresh"
+        )       
     
     def run(self):
         self.build_surface()
@@ -217,7 +230,7 @@ def export_results(results, filename):#导出批量结果的函数
 
 # print("Adsorbed structure total energy:", sim.energy, "eV")
 # print("Final adsorption energy:", sim.adsorption_energy, "eV")
-sites = ["ontop", "bridge", "fcc", "hcp"]
+sites = ["ontop"]
 
 results = []
 

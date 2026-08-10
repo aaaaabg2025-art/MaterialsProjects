@@ -1,0 +1,28 @@
+# Python临时文件
+**/__pycache__/
+*.pyc
+
+# 23_sim中的VASP计算目录
+ASE-learning/23_sim/vasp_*/
+
+# ASE优化过程文件
+*.traj
+*.log
+
+# 计算结果表格和结构
+ASE-learning/23_sim/*.csv
+ASE-learning/23_sim/*.xyz
+
+# VASP大型输出和重启文件
+**/OUTCAR
+**/vasprun.xml
+**/WAVECAR
+**/CHGCAR
+**/CHG
+**/DOSCAR
+**/EIGENVAL
+**/PCDAT
+**/XDATCAR
+
+# VASP许可文件，禁止上传
+**/POTCAR
