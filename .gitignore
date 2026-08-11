@@ -26,3 +26,10 @@ ASE-learning/23_sim/*.xyz
 
 # VASP许可文件，禁止上传
 **/POTCAR
+
+# VASP static learning calculations (outputs only; Python scripts remain trackable)
+VASP/static/vasp_*/
+VASP/static/*.traj
+VASP/static/*.log
+VASP/static/*.xyz
+VASP/static/*.csv
