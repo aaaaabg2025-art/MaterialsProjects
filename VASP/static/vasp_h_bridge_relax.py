@@ -2,7 +2,6 @@ import os
 from datetime import datetime
 
 from ase.build import fcc111, add_adsorbate
-from ase.build import fcc111, add_adsorbate
 from ase.calculators.vasp import Vasp
 from ase.constraints import FixAtoms
 from ase.optimize import BFGS
@@ -41,7 +40,7 @@ slab.set_constraint(FixAtoms(mask=bottom_layer))
 
 print(f"Fixed atoms: {bottom_layer.sum()}", flush=True)
 
-print("===== H on Cu(111): bridge-site static calculation =====", flush=True)
+print("===== H on Cu(111): bridge-site structural relaxation =====", flush=True)
 print(f"Number of atoms: {len(slab)}", flush=True)
 print(f"Cell:\n{slab.cell}", flush=True)
 print(f"Calculation directory: {run_directory}", flush=True)
