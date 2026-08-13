@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "GRACE: Si smoke test",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}\\grace_test_si.py",
+      "console": "integratedTerminal",
+      "envFile": "${workspaceFolder}\\.env"
+    }
+  ]
+}

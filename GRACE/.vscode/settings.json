@@ -1,0 +1,11 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": ["."],
+  "terminal.integrated.env.windows": {
+    "TF_USE_LEGACY_KERAS": "1",
+    "GRACE_CACHE": "${workspaceFolder}\\models",
+    "PYTHONUTF8": "1"
+  },
+  "python.envFile": "${workspaceFolder}\\.env"
+}

@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "GRACE: Si smoke test",
+      "type": "shell",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["${workspaceFolder}\\grace_test_si.py"],
+      "options": {
+        "env": {
+          "TF_USE_LEGACY_KERAS": "1",
+          "GRACE_CACHE": "${workspaceFolder}\\models",
+          "PYTHONUTF8": "1"
+        }
+      },
+      "problemMatcher": []
+    }
+  ]
+}

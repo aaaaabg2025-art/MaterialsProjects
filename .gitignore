@@ -33,3 +33,11 @@ VASP/static/*.traj
 VASP/static/*.log
 VASP/static/*.xyz
 VASP/static/*.csv
+
+# GRACE local runtime: virtual environment, downloaded models, and generated output
+GRACE/.venv/
+GRACE/.env
+GRACE/models/
+GRACE/prediction.extxyz
+GRACE/tools/
+GRACE/uvcache*/
